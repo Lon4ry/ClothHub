@@ -2,7 +2,7 @@ import { HTMLAttributes, forwardRef } from 'react';
 import { clsx } from 'clsx';
 
 interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
-  variant?: 'default' | 'secondary' | 'success' | 'warning' | 'danger';
+  variant?: 'default' | 'secondary' | 'outline' | 'success' | 'warning' | 'danger';
   size?: 'sm' | 'md';
 }
 
@@ -24,6 +24,7 @@ const Badge = forwardRef<HTMLDivElement, BadgeProps>(
           {
             'bg-foreground text-background': variant === 'default',
             'bg-foreground/10 text-foreground': variant === 'secondary',
+            'border border-foreground/20 bg-transparent text-foreground': variant === 'outline',
             'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200': variant === 'success',
             'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200': variant === 'warning',
             'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200': variant === 'danger',

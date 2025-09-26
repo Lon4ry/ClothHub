@@ -1,4 +1,4 @@
-import { HTMLAttributes, forwardRef } from 'react';
+import { HTMLAttributes, useState, forwardRef } from 'react';
 import { clsx } from 'clsx';
 
 interface FooterProps extends HTMLAttributes<HTMLElement> {
@@ -7,6 +7,17 @@ interface FooterProps extends HTMLAttributes<HTMLElement> {
 
 const Footer = forwardRef<HTMLElement, FooterProps>(
   ({ className, ...props }, ref) => {
+    const [email, setEmail] = useState('');
+
+    const handleNewsletterSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+      if (email.trim()) {
+        console.log('Newsletter subscription:', email.trim());
+        // Here you would typically send the email to your backend
+        alert(`Спасибо за подписку! Email: ${email.trim()}`);
+        setEmail(''); // Clear the form
+      }
+    };
     const footerSections = [
       {
         title: 'Каталог',
@@ -119,11 +130,14 @@ const Footer = forwardRef<HTMLElement, FooterProps>(
               <p className="text-sm text-foreground/70 mb-4">
                 Получайте информацию о новинках, скидках и специальных предложениях
               </p>
-              <form className="flex gap-2">
+              <form className="flex gap-2" onSubmit={handleNewsletterSubmit}>
                 <input
                   type="email"
                   placeholder="Ваш email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="flex-1 px-3 py-2 text-sm border border-foreground/20 rounded-md bg-background text-foreground placeholder:text-foreground/50 focus:outline-none focus:ring-2 focus:ring-foreground focus:border-transparent"
+                  required
                 />
                 <button
                   type="submit"
