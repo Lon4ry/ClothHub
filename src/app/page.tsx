@@ -118,10 +118,10 @@ export default function Home() {
             Современный интернет-магазин качественной одежды для подростков и взрослых до 40 лет
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
-            <Button size="lg">
+            <Button size="lg" onClick={() => router.push('/men')}>
               Перейти в каталог
             </Button>
-            <Button size="lg" variant="outline">
+            <Button size="lg" variant="outline" onClick={() => router.push('/about')}>
               Узнать больше
             </Button>
           </div>
