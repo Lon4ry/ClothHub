@@ -5,10 +5,7 @@ import { useRouter } from 'next/navigation';
 import { 
   Button, 
   Card, 
-  CardHeader, 
-  CardTitle, 
   CardContent,
-  Badge,
 } from '@/shared/ui';
 import { Header } from '@/widgets/header';
 import { Footer } from '@/widgets/footer';
@@ -16,7 +13,7 @@ import { ProductCard, ProductFilter } from '@/entities/product';
 
 export default function Home() {
   const [cartCount, setCartCount] = useState(3);
-  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<typeof allProducts>([]);
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
   const [priceRange, setPriceRange] = useState({ min: 0, max: 50000 });
   const router = useRouter();
