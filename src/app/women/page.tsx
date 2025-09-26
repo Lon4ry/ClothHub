@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { 
   Button, 
   Card, 
@@ -16,6 +17,7 @@ import { ProductCard, ProductFilter } from '@/entities/product';
 export default function WomenCatalog() {
   const [cartCount, setCartCount] = useState(3);
   const [currentSort, setCurrentSort] = useState('popularity');
+  const router = useRouter();
 
   // Mock data for women's products
   const womenProducts = [
@@ -141,7 +143,7 @@ export default function WomenCatalog() {
         cartItemsCount={cartCount}
         user={{ name: 'Иван Петров' }}
         onSearch={(query) => console.log('Search:', query)}
-        onCartClick={() => console.log('Cart clicked')}
+        onCartClick={() => router.push('/cart')}
         onProfileClick={() => console.log('Profile clicked')}
       />
 

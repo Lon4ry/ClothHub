@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { 
   Button, 
   Card, 
@@ -16,6 +17,7 @@ import { CartItem } from '@/features/cart';
 
 export default function Home() {
   const [cartCount, setCartCount] = useState(3);
+  const router = useRouter();
   
   // Mock data for demonstration
   const sampleProducts = [
@@ -102,7 +104,7 @@ export default function Home() {
         cartItemsCount={cartCount}
         user={{ name: 'Иван Петров' }}
         onSearch={(query) => console.log('Search:', query)}
-        onCartClick={() => console.log('Cart clicked')}
+        onCartClick={() => router.push('/cart')}
         onProfileClick={() => console.log('Profile clicked')}
       />
 
