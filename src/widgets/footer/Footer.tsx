@@ -66,7 +66,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(
         name: 'ВКонтакте',
         href: 'https://vk.com/clothhub',
         icon: (
-          <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+          <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
             <path d="M15.684 0H4.316C1.934 0 0 1.934 0 4.316v11.368C0 18.066 1.934 20 4.316 20h11.368C18.066 20 20 18.066 20 15.684V4.316C20 1.934 18.066 0 15.684 0zM16.5 14.5h-1.5c-.5 0-.9-.3-1.2-.8-.4-.6-.8-1.2-1.3-1.7-.3-.3-.6-.4-.9-.4-.6 0-.8.5-.8 1.1v1.4c0 .4-.1.6-.6.6-1.1 0-2.3-.7-3.2-1.9-1.4-1.8-2.5-4.2-2.5-4.2s-.1-.3 0-.4c.1-.2.4-.2.4-.2H6c.4 0 .5.2.6.4 0 0 .6 1.4 1.4 2.6.6 1 1 1.1 1.2 1.1.2 0 .3-.1.3-.4v-2.5c-.1-.9-.5-1-.5-1s-.1-.2.1-.3c.2-.1.5-.1.9-.1h1.4c.4 0 .5.2.5.4v3.2c0 .4.2.5.3.5.2 0 .5-.1 1-1 .8-1.2 1.4-2.6 1.4-2.6s.1-.2.4-.3c.2-.1.5 0 .5 0h1.5c.5 0 .6.3.5.4-.2.6-1.8 2.9-1.8 2.9-.2.3-.2.4 0 .7.2.2.8.8 1.2 1.3.7.8 1.2 1.5 1.3 2 .2.5-.1.7-.1.7z"/>
           </svg>
         ),
@@ -75,7 +75,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(
         name: 'Телеграм',
         href: 'https://t.me/clothhub',
         icon: (
-          <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+          <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
             <path d="M18.384,2.297c0.265,0.265,0.264,0.697-0.001,0.961L8.464,13.177c-0.265,0.264-0.695,0.264-0.96,0L2.554,8.225c-0.265-0.264-0.265-0.696,0-0.96c0.265-0.265,0.695-0.265,0.96,0l4.47,4.469L17.424,2.296C17.689,2.032,18.12,2.032,18.384,2.297z"/>
           </svg>
         ),
@@ -189,7 +189,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(
             <div className="mt-6 pt-6 border-t border-foreground/10">
               <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-foreground/50">
                 <div className="flex items-center gap-2">
-                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
                   <span>Безопасные платежи</span>
@@ -201,7 +201,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(
                   <span>Гарантия качества</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h1.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H20a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
                   </svg>
                   <span>Быстрая доставка</span>
