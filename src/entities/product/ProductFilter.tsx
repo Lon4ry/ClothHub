@@ -103,7 +103,7 @@ const ProductFilter = forwardRef<HTMLDivElement, ProductFilterProps>(
             {isCollapsible && (
               <svg
                 className={clsx(
-                  'h-4 w-4 transition-transform duration-200',
+                  'h-5 w-5 transition-transform duration-200',
                   isCollapsed ? 'rotate-0' : 'rotate-180'
                 )}
                 fill="none"
