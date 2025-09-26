@@ -5,124 +5,30 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { 
   Button, 
-  Card, 
-  CardHeader, 
-  CardTitle, 
-  CardContent,
+  Card,
 } from '@/shared/ui';
 import { Header } from '@/widgets/header';
 import { Footer } from '@/widgets/footer';
 import { ProductCard, ProductFilter } from '@/entities/product';
+import { useProducts } from '@/hooks/useProducts';
 
 export default function WomenCatalog() {
   const [cartCount, setCartCount] = useState(3);
   const [currentSort, setCurrentSort] = useState('popularity');
   const router = useRouter();
 
-  // Mock data for women's products
-  const womenProducts = [
-    {
-      id: 'women1',
-      name: 'Элегантное женское платье',
-      price: 4599,
-      originalPrice: 6299,
-      image: 'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400&h=400&fit=crop',
-      brand: 'ClothHub',
-      rating: 4.7,
-      reviewCount: 189,
-      isNew: true,
-      isOnSale: true,
-      inStock: true,
-    },
-    {
-      id: 'women2',
-      name: 'Женская блузка из шелка',
-      price: 3890,
-      image: 'https://images.unsplash.com/photo-1551803091-e20673f15770?w=400&h=400&fit=crop',
-      brand: 'Elegant Style',
-      rating: 4.5,
-      reviewCount: 142,
-      isNew: false,
-      isOnSale: false,
-      inStock: true,
-    },
-    {
-      id: 'women3',
-      name: 'Женские джинсы скинни',
-      price: 3299,
-      image: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=400&h=400&fit=crop',
-      brand: 'Denim Co',
-      rating: 4.3,
-      reviewCount: 98,
-      isNew: false,
-      isOnSale: false,
-      inStock: true,
-    },
-    {
-      id: 'women4',
-      name: 'Женский кардиган вязаный',
-      price: 2799,
-      image: 'https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=400&h=400&fit=crop',
-      brand: 'Cozy Knits',
-      rating: 4.6,
-      reviewCount: 167,
-      isNew: false,
-      isOnSale: false,
-      inStock: true,
-    },
-    {
-      id: 'women5',
-      name: 'Женские туфли на каблуке',
-      price: 5999,
-      originalPrice: 8999,
-      image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&h=400&fit=crop',
-      brand: 'Elegant Shoes',
-      rating: 4.8,
-      reviewCount: 256,
-      isNew: false,
-      isOnSale: true,
-      inStock: true,
-    },
-    {
-      id: 'women6',
-      name: 'Женская юбка миди',
-      price: 2590,
-      image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=400&fit=crop',
-      brand: 'ClothHub',
-      rating: 4.4,
-      reviewCount: 87,
-      isNew: true,
-      isOnSale: false,
-      inStock: false,
-    },
-  ];
-
-  const womenFilters = {
-    categories: [
-      { id: 'dresses', label: 'Платья', count: 45 },
-      { id: 'blouses', label: 'Блузки', count: 32 },
-      { id: 'jeans', label: 'Джинсы', count: 28 },
-      { id: 'cardigans', label: 'Кардиганы', count: 19 },
-      { id: 'shoes', label: 'Обувь', count: 38 },
-      { id: 'skirts', label: 'Юбки', count: 24 },
-      { id: 'accessories', label: 'Аксессуары', count: 35 },
-    ],
-    brands: [
-      { id: 'clothhub', label: 'ClothHub', count: 52 },
-      { id: 'elegant-style', label: 'Elegant Style', count: 28 },
-      { id: 'denim-co', label: 'Denim Co', count: 22 },
-      { id: 'cozy-knits', label: 'Cozy Knits', count: 18 },
-      { id: 'elegant-shoes', label: 'Elegant Shoes', count: 15 },
-    ],
-    sizes: [
-      { id: 'xs', label: 'XS', count: 12 },
-      { id: 's', label: 'S', count: 28 },
-      { id: 'm', label: 'M', count: 42 },
-      { id: 'l', label: 'L', count: 35 },
-      { id: 'xl', label: 'XL', count: 24 },
-      { id: 'xxl', label: 'XXL', count: 15 },
-    ],
-  };
+  // Use the products hook
+  const {
+    products,
+    filterOptions,
+    priceRange,
+    activeFilters,
+    loading,
+    error,
+    handleFiltersChange,
+    handlePriceChange,
+    handleClearFilters
+  } = useProducts('women');
 
   const handleAddToCart = (productId: string) => {
     setCartCount(prev => prev + 1);
@@ -166,60 +72,101 @@ export default function WomenCatalog() {
           </p>
         </div>
 
-        {/* Filters and Sort */}
-        <div className="mb-6 flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-foreground/60">Найдено товаров: {womenProducts.length}</span>
+        {/* Loading State */}
+        {loading && (
+          <div className="text-center py-12">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-foreground mx-auto mb-4"></div>
+            <p className="text-foreground/60">Загрузка товаров...</p>
           </div>
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-foreground/60">Сортировать по:</span>
-            <select 
-              value={currentSort}
-              onChange={(e) => setCurrentSort(e.target.value)}
-              className="px-3 py-2 border border-foreground/20 rounded-md bg-background"
-            >
-              {sortOptions.map(option => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
+        )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Filters Sidebar */}
-          <div className="lg:col-span-1">
-            <Card variant="bordered">
-              <CardHeader>
-                <CardTitle>Фильтры</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ProductFilter filters={womenFilters} />
-              </CardContent>
-            </Card>
+        {/* Error State */}
+        {error && (
+          <div className="text-center py-12">
+            <p className="text-red-600 mb-4">Ошибка: {error}</p>
+            <Button onClick={() => window.location.reload()}>
+              Попробовать снова
+            </Button>
           </div>
+        )}
 
-          {/* Products Grid */}
-          <div className="lg:col-span-3">
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {womenProducts.map(product => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  onAddToCart={handleAddToCart}
+        {/* Content */}
+        {!loading && !error && (
+          <>
+            {/* Filters and Sort */}
+            <div className="mb-6 flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
+              <div className="flex items-center gap-4">
+                <span className="text-sm text-foreground/60">Найдено товаров: {products.length}</span>
+              </div>
+              <div className="flex items-center gap-4">
+                <span className="text-sm text-foreground/60">Сортировать по:</span>
+                <select 
+                  value={currentSort}
+                  onChange={(e) => setCurrentSort(e.target.value)}
+                  className="px-3 py-2 border border-foreground/20 rounded-md bg-background"
+                >
+                  {sortOptions.map(option => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+              {/* Filters Sidebar */}
+              <div className="lg:col-span-1">
+                <ProductFilter
+                  filters={filterOptions}
+                  priceRange={priceRange}
+                  activeFilters={activeFilters}
+                  onFiltersChange={handleFiltersChange}
+                  onPriceChange={handlePriceChange}
+                  onClearAll={handleClearFilters}
+                  isCollapsible={true}
                 />
-              ))}
-            </div>
+              </div>
 
-            {/* Load More Button */}
-            <div className="text-center mt-8">
-              <Button size="lg" variant="outline">
-                Загрузить еще товары
-              </Button>
+              {/* Products Grid */}
+              <div className="lg:col-span-3">
+                {products.length > 0 ? (
+                  <>
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                      {products.map(product => (
+                        <ProductCard
+                          key={product.id}
+                          product={product}
+                          onAddToCart={handleAddToCart}
+                        />
+                      ))}
+                    </div>
+
+                    {/* Load More Button */}
+                    <div className="text-center mt-8">
+                      <Button size="lg" variant="outline">
+                        Загрузить еще товары
+                      </Button>
+                    </div>
+                  </>
+                ) : (
+                  <Card variant="bordered" className="p-12 text-center">
+                    <div className="text-foreground/60">
+                      <svg className="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                      </svg>
+                      <h3 className="text-xl font-semibold mb-2">Товары не найдены</h3>
+                      <p className="mb-4">Попробуйте изменить параметры фильтрации</p>
+                      <Button variant="outline" onClick={handleClearFilters}>
+                        Сбросить фильтры
+                      </Button>
+                    </div>
+                  </Card>
+                )}
+              </div>
             </div>
-          </div>
-        </div>
+          </>
+        )}
       </main>
 
       <Footer />

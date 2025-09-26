@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Product {
+  id            String   @id @default(cuid())
+  name          String
+  price         Int      // stored in cents
+  originalPrice Int?     // stored in cents
+  image         String
+  brand         String
+  rating        Float
+  reviewCount   Int
+  isNew         Boolean  @default(false)
+  isOnSale      Boolean  @default(false)
+  inStock       Boolean  @default(true)
+  category      String   
+  categoryGroup String   // 'all', 'men', 'women', 'kids'
+  sizes         String   // JSON string of available sizes
+  colors        String   // JSON string of available colors
+  materials     String?  // JSON string of materials
+  description   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([categoryGroup])
+  @@index([category])
+  @@index([brand])
+  @@index([isNew])
+  @@index([isOnSale])
+  @@index([inStock])
+}
