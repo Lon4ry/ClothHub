@@ -5,123 +5,30 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { 
   Button, 
-  Card, 
-  CardHeader, 
-  CardTitle, 
-  CardContent,
+  Card,
 } from '@/shared/ui';
 import { Header } from '@/widgets/header';
 import { Footer } from '@/widgets/footer';
 import { ProductCard, ProductFilter } from '@/entities/product';
+import { useProducts } from '@/hooks/useProducts';
 
 export default function KidsCatalog() {
   const [cartCount, setCartCount] = useState(3);
   const [currentSort, setCurrentSort] = useState('popularity');
   const router = useRouter();
 
-  // Mock data for kids' products
-  const kidsProducts = [
-    {
-      id: 'kids1',
-      name: 'Детская футболка с принтом',
-      price: 1299,
-      image: 'https://images.unsplash.com/photo-1503919545889-aef636e10ad4?w=400&h=400&fit=crop',
-      brand: 'Kids Fun',
-      rating: 4.5,
-      reviewCount: 87,
-      isNew: true,
-      isOnSale: false,
-      inStock: true,
-    },
-    {
-      id: 'kids2',
-      name: 'Детские джинсы',
-      price: 2299,
-      originalPrice: 2999,
-      image: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=400&h=400&fit=crop',
-      brand: 'ClothHub Kids',
-      rating: 4.3,
-      reviewCount: 64,
-      isNew: false,
-      isOnSale: true,
-      inStock: true,
-    },
-    {
-      id: 'kids3',
-      name: 'Детское платье праздничное',
-      price: 3599,
-      image: 'https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?w=400&h=400&fit=crop',
-      brand: 'Kids Elegance',
-      rating: 4.7,
-      reviewCount: 132,
-      isNew: false,
-      isOnSale: false,
-      inStock: true,
-    },
-    {
-      id: 'kids4',
-      name: 'Детские кроссовки',
-      price: 2799,
-      originalPrice: 3599,
-      image: 'https://images.unsplash.com/photo-1515396121-ad5086750cde?w=400&h=400&fit=crop',
-      brand: 'Kids Sport',
-      rating: 4.6,
-      reviewCount: 98,
-      isNew: false,
-      isOnSale: true,
-      inStock: true,
-    },
-    {
-      id: 'kids5',
-      name: 'Детская куртка зимняя',
-      price: 4999,
-      image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop',
-      brand: 'ClothHub Kids',
-      rating: 4.8,
-      reviewCount: 156,
-      isNew: true,
-      isOnSale: false,
-      inStock: true,
-    },
-    {
-      id: 'kids6',
-      name: 'Детские шорты летние',
-      price: 1499,
-      image: 'https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?w=400&h=400&fit=crop',
-      brand: 'Summer Kids',
-      rating: 4.2,
-      reviewCount: 43,
-      isNew: false,
-      isOnSale: false,
-      inStock: false,
-    },
-  ];
-
-  const kidsFilters = {
-    categories: [
-      { id: 'tshirts', label: 'Футболки', count: 28 },
-      { id: 'jeans', label: 'Джинсы', count: 18 },
-      { id: 'dresses', label: 'Платья', count: 22 },
-      { id: 'shoes', label: 'Обувь', count: 25 },
-      { id: 'jackets', label: 'Куртки', count: 15 },
-      { id: 'shorts', label: 'Шорты', count: 12 },
-    ],
-    brands: [
-      { id: 'clothhub-kids', label: 'ClothHub Kids', count: 32 },
-      { id: 'kids-fun', label: 'Kids Fun', count: 18 },
-      { id: 'kids-elegance', label: 'Kids Elegance', count: 14 },
-      { id: 'kids-sport', label: 'Kids Sport', count: 21 },
-      { id: 'summer-kids', label: 'Summer Kids', count: 9 },
-    ],
-    sizes: [
-      { id: '2-3', label: '2-3 года', count: 12 },
-      { id: '4-5', label: '4-5 лет', count: 18 },
-      { id: '6-7', label: '6-7 лет', count: 22 },
-      { id: '8-9', label: '8-9 лет', count: 25 },
-      { id: '10-11', label: '10-11 лет', count: 19 },
-      { id: '12-13', label: '12-13 лет', count: 15 },
-    ],
-  };
+  // Use the products hook
+  const {
+    products,
+    filterOptions,
+    priceRange,
+    activeFilters,
+    loading,
+    error,
+    handleFiltersChange,
+    handlePriceChange,
+    handleClearFilters
+  } = useProducts('kids');
 
   const handleAddToCart = (productId: string) => {
     setCartCount(prev => prev + 1);
@@ -165,60 +72,101 @@ export default function KidsCatalog() {
           </p>
         </div>
 
-        {/* Filters and Sort */}
-        <div className="mb-6 flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-foreground/60">Найдено товаров: {kidsProducts.length}</span>
+        {/* Loading State */}
+        {loading && (
+          <div className="text-center py-12">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-foreground mx-auto mb-4"></div>
+            <p className="text-foreground/60">Загрузка товаров...</p>
           </div>
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-foreground/60">Сортировать по:</span>
-            <select 
-              value={currentSort}
-              onChange={(e) => setCurrentSort(e.target.value)}
-              className="px-3 py-2 border border-foreground/20 rounded-md bg-background"
-            >
-              {sortOptions.map(option => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
+        )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Filters Sidebar */}
-          <div className="lg:col-span-1">
-            <Card variant="bordered">
-              <CardHeader>
-                <CardTitle>Фильтры</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ProductFilter filters={kidsFilters} />
-              </CardContent>
-            </Card>
+        {/* Error State */}
+        {error && (
+          <div className="text-center py-12">
+            <p className="text-red-600 mb-4">Ошибка: {error}</p>
+            <Button onClick={() => window.location.reload()}>
+              Попробовать снова
+            </Button>
           </div>
+        )}
 
-          {/* Products Grid */}
-          <div className="lg:col-span-3">
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {kidsProducts.map(product => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  onAddToCart={handleAddToCart}
+        {/* Content */}
+        {!loading && !error && (
+          <>
+            {/* Filters and Sort */}
+            <div className="mb-6 flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
+              <div className="flex items-center gap-4">
+                <span className="text-sm text-foreground/60">Найдено товаров: {products.length}</span>
+              </div>
+              <div className="flex items-center gap-4">
+                <span className="text-sm text-foreground/60">Сортировать по:</span>
+                <select 
+                  value={currentSort}
+                  onChange={(e) => setCurrentSort(e.target.value)}
+                  className="px-3 py-2 border border-foreground/20 rounded-md bg-background"
+                >
+                  {sortOptions.map(option => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+              {/* Filters Sidebar */}
+              <div className="lg:col-span-1">
+                <ProductFilter
+                  filters={filterOptions}
+                  priceRange={priceRange}
+                  activeFilters={activeFilters}
+                  onFiltersChange={handleFiltersChange}
+                  onPriceChange={handlePriceChange}
+                  onClearAll={handleClearFilters}
+                  isCollapsible={true}
                 />
-              ))}
-            </div>
+              </div>
 
-            {/* Load More Button */}
-            <div className="text-center mt-8">
-              <Button size="lg" variant="outline">
-                Загрузить еще товары
-              </Button>
+              {/* Products Grid */}
+              <div className="lg:col-span-3">
+                {products.length > 0 ? (
+                  <>
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                      {products.map(product => (
+                        <ProductCard
+                          key={product.id}
+                          product={product}
+                          onAddToCart={handleAddToCart}
+                        />
+                      ))}
+                    </div>
+
+                    {/* Load More Button */}
+                    <div className="text-center mt-8">
+                      <Button size="lg" variant="outline">
+                        Загрузить еще товары
+                      </Button>
+                    </div>
+                  </>
+                ) : (
+                  <Card variant="bordered" className="p-12 text-center">
+                    <div className="text-foreground/60">
+                      <svg className="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                      </svg>
+                      <h3 className="text-xl font-semibold mb-2">Товары не найдены</h3>
+                      <p className="mb-4">Попробуйте изменить параметры фильтрации</p>
+                      <Button variant="outline" onClick={handleClearFilters}>
+                        Сбросить фильтры
+                      </Button>
+                    </div>
+                  </Card>
+                )}
+              </div>
             </div>
-          </div>
-        </div>
+          </>
+        )}
       </main>
 
       <Footer />
