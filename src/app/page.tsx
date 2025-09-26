@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { 
   Button, 
   Card, 
@@ -16,6 +17,7 @@ import { CartItem } from '@/features/cart';
 
 export default function Home() {
   const [cartCount, setCartCount] = useState(3);
+  const router = useRouter();
   
   // Mock data for demonstration
   const sampleProducts = [
@@ -102,7 +104,7 @@ export default function Home() {
         cartItemsCount={cartCount}
         user={{ name: 'Иван Петров' }}
         onSearch={(query) => console.log('Search:', query)}
-        onCartClick={() => console.log('Cart clicked')}
+        onCartClick={() => router.push('/cart')}
         onProfileClick={() => console.log('Profile clicked')}
       />
 
@@ -116,10 +118,10 @@ export default function Home() {
             Современный интернет-магазин качественной одежды для подростков и взрослых до 40 лет
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
-            <Button size="lg">
+            <Button size="lg" onClick={() => router.push('/men')}>
               Перейти в каталог
             </Button>
-            <Button size="lg" variant="outline">
+            <Button size="lg" variant="outline" onClick={() => router.push('/about')}>
               Узнать больше
             </Button>
           </div>
