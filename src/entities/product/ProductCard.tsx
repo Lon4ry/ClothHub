@@ -1,8 +1,8 @@
 import { HTMLAttributes, forwardRef } from 'react';
 import { clsx } from 'clsx';
-import { Card, CardContent, CardFooter } from '../ui/Card';
-import Button from '../ui/Button';
-import Badge from '../ui/Badge';
+import { Card, CardContent, CardFooter } from '@/shared/ui/Card';
+import Button from '@/shared/ui/Button';
+import Badge from '@/shared/ui/Badge';
 
 interface ProductCardProps extends HTMLAttributes<HTMLDivElement> {
   product: {

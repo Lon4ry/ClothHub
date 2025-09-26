@@ -2,18 +2,17 @@
 
 import { useState } from 'react';
 import { 
-  Header, 
-  Footer, 
   Button, 
   Card, 
   CardHeader, 
   CardTitle, 
   CardContent,
   Badge,
-  ProductCard,
-  ProductFilter,
-  CartItem
-} from '@/components';
+} from '@/shared/ui';
+import { Header } from '@/widgets/header';
+import { Footer } from '@/widgets/footer';
+import { ProductCard, ProductFilter } from '@/entities/product';
+import { CartItem } from '@/features/cart';
 
 export default function Home() {
   const [cartCount, setCartCount] = useState(3);

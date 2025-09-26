@@ -1,6 +1,6 @@
 import { HTMLAttributes, forwardRef } from 'react';
 import { clsx } from 'clsx';
-import Button from '../ui/Button';
+import Button from '@/shared/ui/Button';
 
 interface CartItemProps extends HTMLAttributes<HTMLDivElement> {
   item: {

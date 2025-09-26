@@ -2,9 +2,9 @@ import { HTMLAttributes, useState, forwardRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { clsx } from 'clsx';
-import Button from '../ui/Button';
-import Input from '../ui/Input';
-import Badge from '../ui/Badge';
+import Button from '@/shared/ui/Button';
+import Input from '@/shared/ui/Input';
+import Badge from '@/shared/ui/Badge';
 
 interface HeaderProps extends HTMLAttributes<HTMLElement> {
   cartItemsCount?: number;

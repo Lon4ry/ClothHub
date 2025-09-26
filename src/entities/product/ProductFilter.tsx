@@ -1,9 +1,9 @@
 import { HTMLAttributes, useState, forwardRef } from 'react';
 import { clsx } from 'clsx';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
-import Button from '../ui/Button';
-import Input from '../ui/Input';
-import Badge from '../ui/Badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/Card';
+import Button from '@/shared/ui/Button';
+import Input from '@/shared/ui/Input';
+import Badge from '@/shared/ui/Badge';
 
 interface FilterOption {
   id: string;
