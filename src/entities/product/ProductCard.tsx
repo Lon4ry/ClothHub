@@ -127,7 +127,7 @@ const ProductCard = forwardRef<HTMLDivElement, ProductCardProps>(
                   <svg
                     key={i}
                     className={clsx(
-                      'h-5 w-5',
+                      'h-6 w-6',
                       i < Math.floor(rating) ? 'text-yellow-400' : 'text-foreground/20'
                     )}
                     fill="currentColor"
